@@ -3,6 +3,7 @@ package com.example.roomdatabase;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.roomdatabase.database.AppDatabase;
@@ -26,20 +28,42 @@ public class MainActivity extends AppCompatActivity {
     Adapter adapter;
     List<PersonModel> personModel;
     Context context;
-
     EditText edt_search;
-    ImageView img_search , img_cancel_search;
+    RelativeLayout rl_cancel_search ,rl_search;
+    FloatingActionButton fab_add,fab_delete;
 
-    Button btn_add_Main , btn_deleteAll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         context=this;
+        init();
 
-        btn_add_Main=findViewById(R.id.btn_add_Main);
-        btn_add_Main.setOnClickListener(new View.OnClickListener() {
+// to hidden FAB while swiping recyclerView
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+
+                if (dy > 0 ||dy<0 && fab_add.isShown() && fab_delete.isShown()){
+                    fab_add.hide();
+                    fab_delete.hide();
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+
+                if (newState == RecyclerView.SCROLL_STATE_IDLE){
+                    fab_add.show();
+                    fab_delete.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+
+
+        fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 App.btnAddClickedMain = true;
@@ -48,50 +72,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        fab_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                db.personDao().deleteAll(personModel);
+                refreshList();
+            }
+        });
 
-//        recyclerView=findViewById(R.id.recyclerview);
 
         refreshList();
 
 
-
-        edt_search=findViewById(R.id.edt_search);
-        img_search=findViewById(R.id.imgSearch);
-         img_search.setOnClickListener(new View.OnClickListener() {
+         rl_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
 
                  personModel = db.personDao().findProduct(edt_search.getText().toString());
-
                  adapter = new Adapter(db,personModel, context);
                  recyclerView.setAdapter(adapter);
-                 Toast.makeText(MainActivity.this, personModel.size() + " کارمند پیدا شد", Toast.LENGTH_SHORT).show();
+                 Toast.makeText(MainActivity.this, personModel.size() + " مورد پیدا شد", Toast.LENGTH_SHORT).show();
              }
          });
 
 
-         btn_deleteAll = findViewById(R.id.btn_deleteAll_Main);
-         btn_deleteAll.setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-
-                 db.personDao().deleteAll(personModel);
-                 refreshList();
-        }
-         });
-
-
-
-         img_cancel_search=findViewById(R.id.img_cancel_search);
-         img_cancel_search.setOnClickListener(new View.OnClickListener() {
+        rl_cancel_search.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View view) {
                  edt_search.setText("");
                  refreshList();
              }
          });
-
     }
+
 
     public void refreshList() {
 
@@ -101,25 +114,20 @@ public class MainActivity extends AppCompatActivity {
 
         personModel = db.personDao().getAllPersons();
 
-        recyclerView=findViewById(R.id.recyclerview);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(layoutManager);
         adapter=new Adapter(db,personModel , context);
         recyclerView.setAdapter(adapter);
-
     }
 
-//    public void updatePerson(int position) {
-//      Intent intent= new Intent(context,AddActivity.class);
-//      intent.putExtra("position",position);
-//
-//      startActivity(intent);
-//
-//    }
 
-
-
-
-
+    private void init() {
+        recyclerView=findViewById(R.id.recyclerview);
+        fab_add=findViewById(R.id.fab_Add);
+        fab_delete=findViewById(R.id.fab_delete);
+        edt_search=findViewById(R.id.edt_search);
+        rl_search=findViewById(R.id.rl_search);
+        rl_cancel_search=findViewById(R.id.rl_cancel_search);
+    }
 }

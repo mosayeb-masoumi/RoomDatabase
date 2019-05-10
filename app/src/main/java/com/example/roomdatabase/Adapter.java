@@ -59,7 +59,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
            public void onClick(View view) {
 
                AlertDialog.Builder builder= new AlertDialog.Builder(context);
-               builder.setMessage(  "آیا مایلید برای حذف یا آپدیت"+ " "+personModels.get(position).getName());
+//               builder.setTitle("حذف یا آپدیت"+ " "+personModels.get(position).getName());
+               builder.setMessage("حذف یا آپدیت"+ " "+personModels.get(position).getName());
                builder.setPositiveButton("حذف", new DialogInterface.OnClickListener() {
                    @Override
                    public void onClick(DialogInterface dialogInterface, int i) {

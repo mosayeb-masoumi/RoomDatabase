@@ -3,12 +3,10 @@ package com.example.roomdatabase.database;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-@Database(entities = {PersonModel.class} , version = 1)
+@Database(entities = {PersonModel.class} , version = 1 , exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract PersonDao personDao();
-
-
 
 
 //    private static AppDatabase INSTANCE;

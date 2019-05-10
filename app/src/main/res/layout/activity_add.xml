@@ -9,42 +9,75 @@
     tools:context=".AddActivity">
 
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_add_name"
-        android:textSize="20dp"
-        android:hint="name"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_add_family"
-        android:textSize="20dp"
-        android:hint="family"/>
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/edt_add_email"
-        android:textSize="20dp"
-        android:hint="email"/>
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/shape"
+        android:orientation="vertical">
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_save_person"
-            android:text="save person"/>
+            android:id="@+id/edt_add_name"
+            android:textSize="20dp"
+            android:hint="نام"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_add_family"
+            android:textSize="20dp"
+            android:hint="نام خانوادگی"/>
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_add_email"
+            android:textSize="20dp"
+            android:hint="ایمیل"/>
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginEnd="10dp"-->
+            <!--android:background="@drawable/bg_button"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/btn_save_person"-->
+            <!--android:text="save person"/>-->
+
+        <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_marginStart="10dp"-->
+            <!--android:background="@drawable/bg_button"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:id="@+id/btn_update_person"-->
+            <!--android:text="update person"/>-->
 
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_save_person"
+            android:layout_marginTop="10dp"
+            android:text="ذخیره"
+            android:visibility="gone"
+            android:background="@drawable/bg_button"/>
+
+        <Button
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/btn_update_person"
-            android:text="update person"/>
-    </LinearLayout>
+            android:layout_marginTop="10dp"
+            android:text="آپدیت"
+            android:visibility="gone"
+            android:background="@drawable/bg_button"/>
+    </RelativeLayout>
 
 
 </LinearLayout>

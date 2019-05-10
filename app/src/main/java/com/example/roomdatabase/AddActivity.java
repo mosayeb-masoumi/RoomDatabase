@@ -31,15 +31,18 @@ public class AddActivity extends AppCompatActivity {
 
         context=this;
 
-        edt_name =findViewById(R.id.edt_add_name);
-        edt_family =findViewById(R.id.edt_add_family);
-        edt_mobile=findViewById(R.id.edt_add_email);
+        init();
 
         edt_name.setText("");
         edt_family.setText("");
         edt_mobile.setText("");
 
-        btn_savePerson=findViewById(R.id.btn_save_person);
+
+        if(App.btnAddClickedMain)
+            btn_savePerson.setVisibility(View.VISIBLE);
+        else if(App.updateClicked)
+            btn_update_person.setVisibility(View.VISIBLE);
+
 
 
         final AppDatabase db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"persons")
@@ -58,6 +61,8 @@ public class AddActivity extends AppCompatActivity {
                 edt_name.setText("");
                 edt_family.setText("");
                 edt_mobile.setText("");
+
+                App.btnAddClickedMain=false;
 
 //                db.personDao().insertAll(new PersonModel(edt_name.getText().toString(),edt_family.getText().toString(),edt_email.getText().toString()));
                 startActivity(new Intent(AddActivity.this,MainActivity.class));
@@ -82,7 +87,6 @@ public class AddActivity extends AppCompatActivity {
         }
 
 
-        btn_update_person=findViewById(R.id.btn_update_person);
         btn_update_person.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,5 +111,13 @@ public class AddActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void init() {
+        edt_name =findViewById(R.id.edt_add_name);
+        edt_family =findViewById(R.id.edt_add_family);
+        edt_mobile=findViewById(R.id.edt_add_email);
+        btn_savePerson=findViewById(R.id.btn_save_person);
+        btn_update_person=findViewById(R.id.btn_update_person);
     }
 }
